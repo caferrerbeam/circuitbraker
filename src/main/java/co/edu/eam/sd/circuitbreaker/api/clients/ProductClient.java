@@ -5,6 +5,7 @@ import co.edu.eam.sd.circuitbreaker.api.definitions.ProductAPI;
 import co.edu.eam.sd.circuitbreaker.model.api.responses.CategoryResponse;
 import co.edu.eam.sd.circuitbreaker.model.api.responses.ProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -18,6 +19,7 @@ public class ProductClient {
   @Autowired
   private Retrofit catalogApiConfig;
 
+  @Cacheable(cacheNames = "products", key = "#id")
   public ProductResponse getProduct(Long id) throws IOException {
     ProductAPI api = catalogApiConfig.create(ProductAPI.class);
 
