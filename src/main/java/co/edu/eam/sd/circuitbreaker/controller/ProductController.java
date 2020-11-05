@@ -2,6 +2,7 @@ package co.edu.eam.sd.circuitbreaker.controller;
 
 import co.edu.eam.sd.circuitbreaker.model.responses.Product;
 import co.edu.eam.sd.circuitbreaker.services.ProductService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import java.io.IOException;
@@ -24,10 +25,19 @@ public class CategoryClient {
 
     Call<CategoryResponse> request = api.getCategory(id);
 
-    return request.execute().body();
+    Response<CategoryResponse> response = request.execute();
+
+    if(!response.isSuccessful()) {
+      throw new RuntimeException("api error");
+    }
+
+    return response.body();
   }
 
   public CategoryResponse fallBackCategory(Long id) {
+
+    System.out.println("FALLBACKKKKKKKKKK");
+
     return new CategoryResponse(id.intValue(), "");
   }
 }
