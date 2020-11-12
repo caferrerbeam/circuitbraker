@@ -21,17 +21,19 @@ public class CategoryClient {
   //@Cacheable(cacheNames = "category", key = "#id", unless="#result == null")
   @HystrixCommand(fallbackMethod = "fallBackCategory")
   public CategoryResponse getCategory(Long id) throws IOException {
+    System.out.println("ORIGINALLLLLLLLLL-------------------");
+
     CategoryAPI api = catalogApiConfig.create(CategoryAPI.class);
 
     Call<CategoryResponse> request = api.getCategory(id);
 
     Response<CategoryResponse> response = request.execute();
 
-    if(!response.isSuccessful()) {
-      throw new RuntimeException("api error");
-    }
+      if (!response.isSuccessful()) {
+        throw new RuntimeException("api error");
+      }
 
-    return response.body();
+      return response.body();
   }
 
   public CategoryResponse fallBackCategory(Long id) {

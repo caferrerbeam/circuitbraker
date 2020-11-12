@@ -24,9 +24,9 @@ public class ProductService {
 
   public Product getProduct(Long id) throws IOException {
     ProductResponse productResponse = productClient.getProduct(id);
-    CategoryResponse cat = categoryClient.getCategory(productResponse.getCategoryId().longValue());
+    CategoryResponse catRes = categoryClient.getCategory(productResponse.getCategoryId().longValue());
 
-    Category category = new Category(cat.getName(), cat.getId().longValue());
+    Category category = new Category(catRes.getName(), catRes.getId().longValue());
 
     return new Product(productResponse.getProductName(), productResponse.getProductId().toString(), category);
   }

@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 
 public interface CategoryAPI {
 
-  @GET(Constants.CATALOG_BASE_URL + "/categories/{id}")
+  @GET("/categories/{id}")
   Call<CategoryResponse> getCategory(@Path("id") Long id);
 
 }
