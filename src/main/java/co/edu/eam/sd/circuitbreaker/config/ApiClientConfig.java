@@ -42,8 +42,11 @@ public class ApiClientConfig {
     try {
       KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
       keyStore.load(null, null);
-      InputStream certInputStream = ApiClientConfig.class.getClassLoader().getResourceAsStream("certificado.crt");
+
+
+      InputStream certInputStream = ApiClientConfig.class.getClassLoader().getResourceAsStream("malo.crt");
       BufferedInputStream bis = new BufferedInputStream(certInputStream);
+
       CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
       while (bis.available() > 0) {
         Certificate cert = certificateFactory.generateCertificate(bis);
@@ -61,9 +64,10 @@ public class ApiClientConfig {
 
     OkHttpClient client = new OkHttpClient.Builder()
             .sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager) trustManagers[0])
-            .connectTimeout(1, TimeUnit.SECONDS)
-            .writeTimeout(1, TimeUnit.SECONDS)
-            .readTimeout(1, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            //esto es porque es autofirmado....
             .hostnameVerifier(new HostnameVerifier() {
               @Override
               public boolean verify(String s, SSLSession sslSession) {
